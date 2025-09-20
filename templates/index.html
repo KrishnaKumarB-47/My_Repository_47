@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}AI Artisan Marketplace - Home{% endblock %}
+
+{% block content %}
+<div class="hero-section" style="background: linear-gradient(120deg, #6366f1 0%, #06b6d4 100%); border-radius: 24px; box-shadow: 0 4px 32px rgba(79,70,229,0.12); padding: 3rem 2rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+    <div class="hero-content">
+        <h1 class="hero-title" style="color: #fff; font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem;">AI Assisted Artisan Market</h1>
+        <p class="hero-subtitle" style="color: #e0e7ff; font-size: 1.3rem; margin-bottom: 2rem;">Discover unique handmade products with AI-generated stories and personalized recommendations</p>
+        <div class="hero-buttons" style="display: flex; gap: 1.5rem;">
+            <a href="{{ url_for('register_artisan') }}" class="btn btn-artisan">
+                <i class="fas fa-hammer"></i> Join as Artisan
+            </a>
+            <a href="{{ url_for('register_buyer') }}" class="btn btn-buyer">
+                <i class="fas fa-shopping-cart"></i> Shop as Buyer
+            </a>
+        </div>
+    </div>
+    <div class="hero-image">
+        <i class="fas fa-store hero-icon" style="font-size: 8rem; color: #e0e7ff;"></i>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container">
+        <h2 class="section-title">Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3>AI Story Generation</h3>
+                <p>Every product gets a unique AI-generated story based on its description and category</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3>Smart Recommendations</h3>
+                <p>Personalized product recommendations based on your browsing history and preferences</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Multi-language Support</h3>
+                <p>Upload products in your local language with automatic translation support</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section">
+    <div class="container">
+        <h2>Ready to Get Started?</h2>
+        <p>Choose your role and begin your journey in the AI Artisan Marketplace</p>
+        <div class="cta-buttons" style="display: flex; gap: 2rem; justify-content: center;">
+            <a href="{{ url_for('login_artisan') }}" class="btn btn-artisan">
+                <i class="fas fa-sign-in-alt"></i> Artisan Login
+            </a>
+            <a href="{{ url_for('login_buyer') }}" class="btn btn-buyer">
+                <i class="fas fa-sign-in-alt"></i> Buyer Login
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

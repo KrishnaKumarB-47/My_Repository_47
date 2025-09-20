@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Artisan Dashboard - AI Artisan Marketplace{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Welcome, {{ session.name }}!</h1>
+        <p>Manage your products and generate AI stories</p>
+    </div>
+    
+    <div class="dashboard-actions">
+        <button class="btn btn-primary" onclick="openAddProductModal()">
+            <i class="fas fa-plus"></i> Add New Product
+        </button>
+    </div>
+    
+    <div class="products-section">
+        <h2>Your Products</h2>
+        {% if products %}
+            <div class="products-grid">
+                {% for product in products %}
+                <div class="product-card">
+                    <div class="product-image">
+                        {% if product[5] %}
+                            <img src="{{ url_for('uploaded_file', filename=product[5]) }}" alt="{{ product[1] }}">
+                        {% else %}
+                            <i class="fas fa-image"></i>
+                        {% endif %}
+                    </div>
+                    <div class="product-info">
+                        <h3>{{ product[1] }}</h3>
+                        <p class="product-description">{{ product[2] }}</p>
+                        <p class="product-category">{{ product[3] }}</p>
+                        <p class="product-price">₹{{ "%.2f"|format(product[4]) }}</p>
+                        {% if product[6] %}
+                        <div class="ai-story">
+                            <h4>AI Story:</h4>
+                            <p>{{ product[6] }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-box-open"></i>
+                <h3>No products yet</h3>
+                <p>Add your first product to get started!</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Add Product Modal -->
+<div id="addProductModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add New Product</h2>
+            <span class="close" onclick="closeAddProductModal()">&times;</span>
+        </div>
+        <form id="addProductForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" id="productName" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="productDescription">Description</label>
+                <textarea id="productDescription" name="description" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="productCategory">Category</label>
+                <select id="productCategory" name="category" required>
+                    <option value="handicraft">Handicraft</option>
+                    <option value="jewelry">Jewelry</option>
+                    <option value="textile">Textile</option>
+                    <option value="pottery">Pottery</option>
+                    <option value="woodwork">Woodwork</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="productPrice">Price (INR)</label>
+                <input type="number" id="productPrice" name="price" step="0.01" required>
+                <small>Enter price in Indian Rupees</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="productImage">Product Image</label>
+                <input type="file" id="productImage" name="image" accept="image/*">
+                <small>Supported formats: PNG, JPG, JPEG, GIF, WEBP (Max 16MB)</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="productLanguage">Language</label>
+                <select id="productLanguage" name="language">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="hi">Hindi</option>
+                    <option value="zh">Chinese</option>
+                    <option value="ja">Japanese</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="generateStory()">
+                    <i class="fas fa-magic"></i> Generate AI Story
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Add Product
+                </button>
+            </div>
+        </form>
+        
+        <div id="aiStoryPreview" class="ai-story-preview" style="display: none;">
+            <h4>AI Generated Story Preview:</h4>
+            <p id="storyText"></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function openAddProductModal() {
+    document.getElementById('addProductModal').style.display = 'block';
+}
+
+function closeAddProductModal() {
+    document.getElementById('addProductModal').style.display = 'none';
+    document.getElementById('addProductForm').reset();
+    document.getElementById('aiStoryPreview').style.display = 'none';
+}
+
+async function generateStory() {
+    const description = document.getElementById('productDescription').value;
+    const category = document.getElementById('productCategory').value;
+    
+    if (!description) {
+        alert('Please enter a product description first');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/generate_story', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                description: description,
+                category: category
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            document.getElementById('storyText').textContent = result.story;
+            document.getElementById('aiStoryPreview').style.display = 'block';
+        } else {
+            alert('Error generating story: ' + result.message);
+        }
+    } catch (error) {
+        alert('An error occurred while generating the story');
+    }
+}
+
+document.getElementById('addProductForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    try {
+        const response = await fetch('/add_product', {
+            method: 'POST',
+            body: formData  // Send FormData directly for file upload
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('Product added successfully!', 'success');
+            location.reload();
+        } else {
+            showNotification('Error: ' + result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('An error occurred. Please try again.', 'error');
+    }
+});
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('addProductModal');
+    if (event.target == modal) {
+        closeAddProductModal();
+    }
+}
+</script>
+{% endblock %}
+

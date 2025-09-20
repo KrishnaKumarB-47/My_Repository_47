@@ -1,0 +1,12 @@
+# Google Cloud Configuration
+GCP_PROJECT_ID=your-project-id-here
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/service-account-key.json
+
+# Flask Configuration
+SECRET_KEY=your-secret-key-here
+
+# Gemini AI Configuration (for chatbot)
+GEMINI_API_KEY=your-gemini-api-key-here
+
+# Optional: Override default region
+# GCP_DEFAULT_REGION=asia-south2

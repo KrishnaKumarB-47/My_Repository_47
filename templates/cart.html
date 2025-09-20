@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - AI Artisan Marketplace{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <div class="cart-header">
+        <h1><i class="fas fa-shopping-cart"></i> Shopping Cart</h1>
+        <p>Review your selected items</p>
+    </div>
+    
+    {% if cart_items %}
+    <div class="cart-content">
+        <div class="cart-items">
+            {% for item in cart_items %}
+            <div class="cart-item" id="cart-item-{{ item[0] }}">
+                <div class="item-image">
+                    {% if item[6] %}
+                        <img src="{{ url_for('uploaded_file', filename=item[6]) }}" alt="{{ item[3] }}">
+                    {% else %}
+                        <i class="fas fa-image"></i>
+                    {% endif %}
+                </div>
+                
+                <div class="item-details">
+                    <h3>{{ item[3] }}</h3>
+                    <p class="item-artisan">by {{ item[7] }}</p>
+                    <p class="item-description">{{ item[4] }}</p>
+                    <p class="item-price">₹{{ "%.2f"|format(item[5]) }}</p>
+                </div>
+                
+                <div class="item-quantity">
+                    <label for="qty-{{ item[0] }}">Quantity:</label>
+                    <div class="quantity-controls">
+                        <button class="btn btn-sm btn-outline" onclick="updateQuantity({{ item[0] }}, {{ item[1]|int - 1 }})">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="number" id="qty-{{ item[0] }}" value="{{ item[1] }}" min="1" 
+                               onchange="updateQuantity({{ item[0] }}, parseInt(this.value))">
+                        <button class="btn btn-sm btn-outline" onclick="updateQuantity({{ item[0] }}, {{ item[1]|int + 1 }})">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="item-total">
+                    <p class="item-total-price">₹{{ "%.2f"|format(item[5] * item[1]) }}</p>
+                </div>
+                
+                <div class="item-actions">
+                    <button class="btn btn-sm btn-danger" onclick="removeFromCart({{ item[0] }})">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="cart-summary">
+            <div class="summary-card">
+                <h3>Order Summary</h3>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>₹{{ "%.2f"|format(total) }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span>₹50.00</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total:</span>
+                    <span>₹{{ "%.2f"|format(total + 50) }}</span>
+                </div>
+                
+                <div class="checkout-actions">
+                    <button class="btn btn-primary btn-full" onclick="proceedToCheckout()">
+                        <i class="fas fa-credit-card"></i> Proceed to Checkout
+                    </button>
+                    <div style="display: flex; justify-content: flex-start;">
+                        <a href="{{ url_for('browse') }}" class="btn btn-outline btn-full" style="margin-top: 0.5rem;">
+                            <i class="fas fa-arrow-left"></i> Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <i class="fas fa-shopping-cart"></i>
+        <h3>Your cart is empty</h3>
+        <p>Add some products to get started!</p>
+        <a href="{{ url_for('browse') }}" class="btn btn-primary">
+            <i class="fas fa-shopping-bag"></i> Browse Products
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function updateQuantity(cartItemId, newQuantity) {
+    if (newQuantity < 1) {
+        removeFromCart(cartItemId);
+        return;
+    }
+    
+    try {
+        const response = await fetch('/update_cart_quantity', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cart_item_id: cartItemId,
+                quantity: parseInt(newQuantity)
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            location.reload();
+        } else {
+            showNotification('Error: ' + result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('An error occurred. Please try again.', 'error');
+    }
+}
+
+async function removeFromCart(cartItemId) {
+    if (!confirm('Are you sure you want to remove this item from your cart?')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch('/remove_from_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cart_item_id: cartItemId
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('Item removed from cart', 'success');
+            location.reload();
+        } else {
+            showNotification('Error: ' + result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('An error occurred. Please try again.', 'error');
+    }
+}
+
+function proceedToCheckout() {
+    showNotification('Checkout functionality coming soon!', 'info');
+    // This would integrate with payment gateway
+}
+</script>
+{% endblock %}

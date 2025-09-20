@@ -1,0 +1,9 @@
+# Google Cloud Configuration
+GCP_PROJECT_ID=your-project-id-here
+GOOGLE_APPLICATION_CREDENTIALS=./service-account-key.json
+
+# Flask Configuration
+SECRET_KEY=your-secret-key-here-change-this-in-production
+
+# Optional: Override default region
+# GCP_DEFAULT_REGION=asia-south1

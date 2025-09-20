@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "virtual-firefly-472606-b4",
+  "private_key_id": "1fa6f5617faedcd05f04b87210a4a7f4307d609d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC3QISQw1c/7b74\n7/3LVhWlzFb3atmmtdt6X8SuH166gd6I0C1kHrlEY0W85oZR7LJivFUHSqq+Q4ei\nm3X6HcPi+9svpCHodsbWIzHGlLyr95IoCm30JC6/H3C5NYGBvtnCfErrtHE/iPtU\n2NRIWuYDaN7R0MV3ypijM1BdeL+vd3I7g+K51OhJrN7mKCmwlNogLDWmChsvqhxQ\ndMRHfRYCkp1mMmnGIaX2SzhYiM4OZsCAduSac/sG1MmLYr4y4XHGuCr63DEmyJ53\nPCRD6XuivpFBII/wOt+i/RluTFI2ukUmkFSTYIsqbGmTGAyYmMwdCJmr8dLCUJgU\nJe66t1t9AgMBAAECggEAJFgDoqlXRcrLaBhC27/GOdSBv/69TXK+ZXIWchkvIqrM\nnZI6GmP8hvtwUpNeuuNIiswCyhgtLmB6x01xU8pw9fTQ5w00m2PpMgGXZuTLWYjX\ngCD3ZycA7W9ZHiZmObsF+axIeKBYIIt0m0KIsZPzj+QN4wt2inhQFvf/nZYr4Cro\nQ98BLzJRSK1USJSrCb+XS/W+wMf63/y/fDV7wfdBLUiqBE+40VyHon5avpltA73+\nfLIu7ic4VG8e71REyC7ZwoM4wUKMtw9gcheLtPlSpJmTkp8rty2iAe+SjUy64CMz\nxSuY8JZZccimS96/VzvqqX3Tak5dsEZbBqznLPtDaQKBgQDwyT9PVGsPQmMyFrFi\n3chg8JhSjMDOshp/zwKt1fpEnIPTrBx9vJLUJctp04uFhTJoKPu6XuTQyE5TfPX9\noloDgZ3o30DcIjKWaRXmAxLyb+RJvy+d8splO6t/iR2Cu9OMcgYFOMoymjnxJLux\ncuqPYVc3PYAIh5Tj712Zkd+KWQKBgQDC1KXIawCI//0BXGhQD1X87LCxXJT9xHBC\n4E+JgHl+gOk8s3zfuI/v+RooSJvbMmFy3PmuzsghWn/B4YO64N2AjN1BXVweg0Wj\na635qZ0dngNB/mnPrZiOJa5jTmCGIEFPEJnE2ZWhoHgIvH4o2sNMhqmU99ELIQPB\nKXTt3NptxQKBgFqjhv93ya0+0lRiknejAPDs4IoCjfnAtZTy+hEyATmeqUke+sKi\nH6tYZs/5YAXs8+KdutSXMA8ft8xZt8e4O6YiPq0QjTvQa7aO7D1fXtyAHjFclLIi\nWOnuokop9T/nMGUn7vg8PnD5+WG68CSGG6HJhKk4r1+GmheLXXKXpMxRAoGAQrLR\n3n7jPAOG9gRQobfeVCwjgVSUnRu24u4vzH7zGN/A+UrpIR3qCNlanxfcY3on6k7E\nG5gm42Q8AH/XvQ5mRi/zPwFbHAcMvBmNAb+TTiReMSWLy9E+PMuhm9WlLcW1FgA0\n5DMpCqAI99SvzAS4f2ZKf/km04yF4Ib0xMmq7ZECgYBNt4dg+nry2/fFzXgFWGAw\nJ4ME9vAQbFk46/Uk6HoNJXQ0LZ+Jv69IH0Qg+rZahMje+o9P6JMF9utLhDvwv2Vx\nTIgCZozANu6CVuvIRlXUbLbCKN6QWH57mBCl8rOvgqZVJn0rWtpUTowUzPvQ5H3H\nKdqsWL4k6POmDautE7MXtg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "localartians-ai-sa@virtual-firefly-472606-b4.iam.gserviceaccount.com",
+  "client_id": "112365296666642445241",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/localartians-ai-sa%40virtual-firefly-472606-b4.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

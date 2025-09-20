@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product[1] }} - AI Artisan Marketplace{% endblock %}
+
+{% block content %}
+<div class="product-detail-container">
+    <div class="product-detail">
+        <div class="product-image-large">
+            {% if product[5] %}
+                <img src="{{ url_for('uploaded_file', filename=product[5]) }}" alt="{{ product[1] }}">
+            {% else %}
+                <i class="fas fa-image"></i>
+            {% endif %}
+        </div>
+        
+        <div class="product-details">
+            <h1>{{ product[1] }}</h1>
+            <p class="product-artisan">by {{ product[7] }}</p>
+            <p class="product-category">{{ product[3] }}</p>
+            <p class="product-price">₹{{ "%.2f"|format(product[4]) }}</p>
+            
+            <div class="product-description">
+                <h3>Description</h3>
+                <p>{{ product[2] }}</p>
+            </div>
+            
+            {% if product[6] %}
+            <div class="ai-story">
+                <h3>AI Generated Story</h3>
+                <div class="story-content">
+                    <i class="fas fa-robot story-icon"></i>
+                    <p>{{ product[6] }}</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="product-actions">
+                {% if session.user_type == 'buyer' %}
+                <button class="btn btn-primary" onclick="addToCart({{ product[0] }})">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </button>
+                {% endif %}
+                <button class="btn btn-secondary">
+                    <i class="fas fa-heart"></i> Add to Favorites
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-share"></i> Share
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="back-button">
+        <a href="{{ url_for('buyer_dashboard') }}" class="btn btn-outline">
+            <i class="fas fa-arrow-left"></i> Back to Recommendations
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function addToCart(productId) {
+    try {
+        const response = await fetch('/add_to_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                quantity: 1
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification('Product added to cart!', 'success');
+        } else {
+            showNotification('Error: ' + result.message, 'error');
+        }
+    } catch (error) {
+        showNotification('An error occurred. Please try again.', 'error');
+    }
+}
+</script>
+{% endblock %}
+
