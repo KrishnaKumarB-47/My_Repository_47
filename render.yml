@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ai-artisan-marketplace
+    env: python
+    buildCommand: "pip install -r requirements.txt && python demo_data.py"
+    startCommand: "python app.py"
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: GCP_PROJECT_ID
+        value: "virtual-firefly-472606"
+      - key: GEMINI_API_KEY
+        value: "AIzaSyBvQ8K9X2Y3Z4A5B6C7D8E9F0G1H2I3J4K5L"
