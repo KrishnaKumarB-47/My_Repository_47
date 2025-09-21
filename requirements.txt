@@ -3,6 +3,7 @@ Werkzeug==2.3.7
 google-cloud-translate==3.11.1
 google-cloud-aiplatform==1.38.1
 google-generativeai==0.3.2
-Pillow==10.0.1
+Pillow>=10.0.0,<11.0.0
 python-dotenv==1.0.0
+gunicorn==21.2.0
 
